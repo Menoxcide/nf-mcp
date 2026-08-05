@@ -1,0 +1,12 @@
+{
+  "name": "io.github.Menoxcide/nf-mcp",
+  "description": "Northern Forge MCP — free-core agent tools with typed schemas (diff, cron, units, JSON→TS, golden hour, pack weight, prompts)",
+  "version": "1.0.0",
+  "websiteUrl": "https://nf-mcp.vercel.app",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://nf-mcp.vercel.app/mcp"
+    }
+  ]
+}
