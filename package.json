@@ -2,8 +2,13 @@
   "name": "nf-mcp",
   "version": "1.0.0",
   "private": true,
-  "description": "Northern Forge MCP server — agent-callable tools for the product catalog, popular ranks, events, and forge utilities",
+  "description": "Northern Forge MCP server \u2014 agent-callable tools for the product catalog, popular ranks, events, and forge utilities",
   "engines": {
     "node": ">=18"
-  }
+  },
+  "scripts": {
+    "start": "node server.js",
+    "health": "node -e \"require('http').get('http://127.0.0.1:8080/health',r=>r.pipe(process.stdout))\""
+  },
+  "main": "server.js"
 }
