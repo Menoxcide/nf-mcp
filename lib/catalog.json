@@ -1,0 +1,722 @@
+[
+  {
+    "product_id": "northern-forge-mcp",
+    "slug": "northern-forge-mcp",
+    "title": "Northern Forge MCP",
+    "url": "https://nf-mcp.vercel.app",
+    "blurb": "Agent tool server: diff text, explain cron, convert units, slug/case, reading time, mesh/loop status, action queue for human review, plus catalog and pack tools.",
+    "monetization": "Free core tools \u00b7 pro API key later",
+    "kind": "mcp_server"
+  },
+  {
+    "product_id": "voice-clone-studio",
+    "slug": "voice-clone-studio",
+    "title": "Voice Clone Studio",
+    "url": "https://voice-clone-studio-roan.vercel.app",
+    "blurb": "Guided local voice training and XTTS speech on your own GPU. Voices stay on your machine \u2014 for creators and labs who want control, not cloud cloning.",
+    "monetization": "Free local \u00b7 run on your GPU (not cloud SaaS)",
+    "kind": "local_studio"
+  },
+  {
+    "product_id": "voice-sing-studio",
+    "slug": "voice-sing-studio",
+    "title": "Voice Sing Studio",
+    "url": "https://voice-sing-studio.vercel.app",
+    "blurb": "Guided local singing voice conversion on your GPU. Dry vocal in, your voice out \u2014 private by design.",
+    "monetization": "Free local \u00b7 run on your GPU (not cloud SaaS)",
+    "kind": "local_studio"
+  },
+  {
+    "product_id": "mi-golden-hour",
+    "slug": "mi-golden-hour-planner",
+    "title": "MI Golden Hour Planner",
+    "url": "https://mi-golden-hour-planner.vercel.app",
+    "blurb": "Pick a Northern Michigan town and date \u2014 get sunrise, golden hour, and sunset so you show up when the light is perfect.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "mi-trailhead-snow-depth-visualizer",
+    "slug": "mi-trailhead-snow-depth-visualizer",
+    "title": "Trailhead Snow Depth Visualizer",
+    "url": "https://mi-trailhead-snow-depth-visualizer.vercel.app",
+    "blurb": "Check trailhead snow depth before you drive \u2014 quick boot vs snowshoe call for UP & northern Lower trails.",
+    "monetization": "Free view + $3 PDF unlock",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "hearth-harbor-streaks",
+    "slug": "hearth-harbor-streaks",
+    "title": "Hearth Harbor Streaks",
+    "url": "https://northern-forge-labs.vercel.app/tools/streaks",
+    "blurb": "Track household habits together and print a weekly streak card \u2014 keep the chain alive without another app account.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "json-ts-interface-forge",
+    "slug": "json-ts-interface-forge",
+    "title": "JSON \u2192 TS Interface Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/json-ts",
+    "blurb": "Paste any JSON \u2192 get TypeScript interfaces instantly. Fix types without rewriting by hand.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "gear-pack-weight",
+    "slug": "gear-pack-weight",
+    "title": "Gear Pack Weight Builder",
+    "url": "https://northern-forge-labs.vercel.app/tools/gear-pack",
+    "blurb": "Build a pack list and see total weight in grams and pounds before you hit the trail.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "micro-waitlist-countdown",
+    "slug": "micro-waitlist-countdown",
+    "title": "Micro Waitlist + Countdown",
+    "url": "https://northern-forge-labs.vercel.app/tools/waitlist",
+    "blurb": "Spin up a 24-hour waitlist + countdown for a launch \u2014 local, fast, no week-long setup.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "prompt-context-forge",
+    "slug": "prompt-forge",
+    "title": "Prompt Context Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/prompt-forge",
+    "blurb": "Paste messy notes once \u2192 get clean Claude, GPT, and Grok prompts you can copy. Magic buttons fill samples when you're stuck.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "apptrack-board",
+    "slug": "apptrack",
+    "title": "AppTrack Board",
+    "url": "https://northern-forge-labs.vercel.app/tools/apptrack",
+    "blurb": "Paste job or app statuses \u2192 stage board + CSV. See what's stuck without a project manager.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "x-copy-forge",
+    "slug": "x-copy-forge",
+    "title": "Copy Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/x-copy-forge",
+    "blurb": "Drop your product link + blurb \u2192 get launch posts, pins, threads, and reply starters ready to paste.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "dusk-veil-composer",
+    "slug": "dusk-veil-composer",
+    "title": "Dusk Veil Composer",
+    "url": "https://dusk-veil-composer.vercel.app",
+    "blurb": "Compose golden-hour mood boards and copy for shoots.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "porcupine-bluff-kit-ledger",
+    "slug": "porcupine-bluff-kit-ledger",
+    "title": "Porcupine Bluff Kit Ledger",
+    "url": "https://porcupine-bluff-kit-ledger.vercel.app",
+    "blurb": "Trail kit inventory ledger for Northern Michigan packs.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "dialectic-fork-matrix",
+    "slug": "dialectic-fork-matrix",
+    "title": "Dialectic Fork Matrix",
+    "url": "https://dialectic-fork-matrix.vercel.app",
+    "blurb": "Score two sides of a decision on your criteria \u2014 pick a fork with eyes open.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "maple-ridge-route-weaver",
+    "slug": "maple-ridge-route-weaver",
+    "title": "Maple Ridge Route Weaver",
+    "url": "https://maple-ridge-route-weaver.vercel.app",
+    "blurb": "Route weaving helper for ridge hikes.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "voidweave-dice-oracle",
+    "slug": "voidweave-dice-oracle",
+    "title": "Voidweave Dice Oracle",
+    "url": "https://voidweave-dice-oracle.vercel.app",
+    "blurb": "Roll dice, watch a glyph bloom, and grab a short oracle phrase for tabletop or creative sparks.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "forgebill",
+    "slug": "forgebill",
+    "title": "ForgeBill",
+    "url": "https://forgebill-iota.vercel.app",
+    "blurb": "Build a clean invoice or estimate in one page: line items, discount, tax, total. Print to PDF or download one shareable HTML file that opens anywhere, offline. Made for freelancers.",
+    "monetization": "Free core editor + pro batch export and saved history",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "contrast-forge",
+    "slug": "contrast-forge",
+    "title": "Contrast Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/contrast-forge",
+    "blurb": "Check WCAG contrast on your palette so text stays readable \u2014 pick colors that pass AA/AAA.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "regex-forge",
+    "slug": "regex-forge",
+    "title": "Regex Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/regex-forge",
+    "blurb": "Test regex with live highlights, flags, and a shareable URL \u2014 debug patterns before they hit production.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "mailforge",
+    "slug": "mailforge",
+    "title": "MailForge",
+    "url": "https://nf-mailforge.vercel.app",
+    "blurb": "Write in Markdown \u2192 get clean email HTML. Preview and copy without a marketing suite.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "nf-agent-ops-skill",
+    "slug": "nf-agent-ops-skill",
+    "title": "NF Agent Ops Skill",
+    "url": "https://northern-forge-labs.vercel.app/tools/nf-agent-ops-skill",
+    "blurb": "Installable skill: how agents use Northern Forge MCP + catalog + unlocks.",
+    "monetization": "Free skill",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "jwt-claim-lens",
+    "slug": "jwt-claim-lens",
+    "title": "JWT Claim Lens",
+    "url": "https://northern-forge-labs.vercel.app/tools/jwt-claim-lens",
+    "blurb": "Paste a JWT \u2192 see header and claims decoded. Debug auth tokens without leaving the browser.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "cron-humanizer",
+    "slug": "cron-humanizer",
+    "title": "Cron Humanizer",
+    "url": "https://northern-forge-labs.vercel.app/tools/cron-humanizer",
+    "blurb": "Paste a cron expression \u2192 read it in plain English. Stop guessing what 0 3 * * 1 means.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "uuid-batch-forge",
+    "slug": "uuid-batch-forge",
+    "title": "UUID Batch Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/uuid-batch-forge",
+    "blurb": "Generate a batch of UUIDs for tests, fixtures, or migrations \u2014 copy the whole list at once.",
+    "monetization": "Free core + $2.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "base64-lens",
+    "slug": "base64-lens",
+    "title": "Base64 Lens",
+    "url": "https://northern-forge-labs.vercel.app/tools/base64-lens",
+    "blurb": "Encode or decode Base64 safely in-browser \u2014 check payloads before they break an API.",
+    "monetization": "Free core + $2.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "slug-case-forge",
+    "slug": "slug-case-forge",
+    "title": "Slug & Case Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/slug-case-forge",
+    "blurb": "Turn titles into clean URL slugs, snake_case, or camelCase \u2014 one paste, three formats.",
+    "monetization": "Free core + $2.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "rate-card-forge",
+    "slug": "rate-card-forge",
+    "title": "Rate Card Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/rate-card-forge",
+    "blurb": "Build a simple rate card for your services \u2014 packages, day rates, and what's included.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "scope-creep-meter",
+    "slug": "scope-creep-meter",
+    "title": "Scope Creep Meter",
+    "url": "https://northern-forge-labs.vercel.app/tools/scope-creep-meter",
+    "blurb": "Score whether a request is scope creep before you say yes \u2014 protect the original deal.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "meeting-cost-clock",
+    "slug": "meeting-cost-clock",
+    "title": "Meeting Cost Clock",
+    "url": "https://northern-forge-labs.vercel.app/tools/meeting-cost-clock",
+    "blurb": "See how much this meeting costs in real time \u2014 rates \u00d7 people \u00d7 minutes. End it sooner.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "client-status-pulse",
+    "slug": "client-status-pulse",
+    "title": "Client Status Pulse",
+    "url": "https://northern-forge-labs.vercel.app/tools/client-status-pulse",
+    "blurb": "One-page client status you can paste into email \u2014 green/yellow/red without a status meeting.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "trail-layer-checklist",
+    "slug": "trail-layer-checklist",
+    "title": "Trail Layer Checklist",
+    "url": "https://northern-forge-labs.vercel.app/tools/trail-layer-checklist",
+    "blurb": "Layer and gear checklist for northern weather \u2014 tick boxes before you leave the car.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "water-carry-calc",
+    "slug": "water-carry-calc",
+    "title": "Water Carry Calc",
+    "url": "https://northern-forge-labs.vercel.app/tools/water-carry-calc",
+    "blurb": "Estimate water to carry for a hike \u2014 distance, heat, and hours without the spreadsheet.",
+    "monetization": "Free core + $2.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "hook-line-forge",
+    "slug": "hook-line-forge",
+    "title": "Hook Line Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/hook-line-forge",
+    "blurb": "Write a scroll-stopping first line for posts and emails \u2014 test hooks until one clicks.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "thread-outline-forge",
+    "slug": "thread-outline-forge",
+    "title": "Thread Outline Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/thread-outline-forge",
+    "blurb": "Outline a social thread before you write \u2014 beats, order, and a closer that lands.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "focus-block-timer",
+    "slug": "focus-block-timer",
+    "title": "Focus Block Timer",
+    "url": "https://northern-forge-labs.vercel.app/tools/focus-block-timer",
+    "blurb": "Set a focus block, jot what you're working on, and stay on one task until the timer rings \u2014 no login, no cloud.",
+    "monetization": "Free core + $2.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "veilweave-terminal",
+    "slug": "veilweave-terminal",
+    "title": "Veilweave Terminal",
+    "url": "https://veilweave-terminal.vercel.app",
+    "blurb": "Static neon-CRT web tool that ingests hyperlocal Northern Michigan coords to render live particle glyphs and mood-engine presets for sunrise/sunset/golden-hour timing; makers\u2026",
+    "monetization": "free core terminal with live glyphs + paid pro particle skins and preset packs",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "forgebill-skill",
+    "slug": "forgebill-skill",
+    "title": "ForgeBill Skill",
+    "url": "https://forgebill-skill.vercel.app",
+    "blurb": "SKILL.md teaches agents a niche workflow to generate freelancer invoice/estimate one-pagers via MCP tools: JSON templating, regex line validation, base64 asset embeds, and diff-based revisions. Unique for agents because it adds instant fixture-based debugging loops and copy-to-clipboard status instead of generic prompting.",
+    "monetization": "free core skill with single-invoice workflow; pro unlocks batch processing and revision history",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "astral-quote-lattice",
+    "slug": "astral-quote-lattice",
+    "title": "Astral Quote Lattice",
+    "url": "https://astral-quote-lattice.vercel.app",
+    "blurb": "Renders a single static page where freelancers build one-page invoices or estimates by populating a live pricing decision matrix; drag-to-reorder line items, toggle scenario\u2026",
+    "monetization": "Free core matrix editing and live preview; pro unlocks one-click PDF/PNG export, shareable link generation, and saved scenario presets.",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "forgebill-mcp",
+    "slug": "forgebill-mcp",
+    "title": "ForgeBill MCP",
+    "url": "https://forgebill-mcp.vercel.app",
+    "blurb": "Unique because it is agent-first with no dashboard, enforces schema-vali",
+    "monetization": "Free: 20 tool calls per month with basic templates. Paid: unlimited calls, custom templates, branding, and PDF export.",
+    "kind": "mcp_server"
+  },
+  {
+    "product_id": "ridgeway-reckoner",
+    "slug": "ridgeway-reckoner",
+    "title": "Ridgeway Reckoner",
+    "url": "https://ridgeway-reckoner.vercel.app",
+    "blurb": "Static HTML tool that builds one-page estimates for UP trail guides and outfitters. Live SVG canvas draws a simple trail line; drag stops or change distance and line items\u2026",
+    "monetization": "Free map and estimate builder; pro unlocks one-click PDF export and saved templates",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "tahquamenon-pack-scout",
+    "slug": "tahquamenon-pack-scout",
+    "title": "Tahquamenon Pack Scout",
+    "url": "https://tahquamenon-pack-scout.vercel.app",
+    "blurb": "Static HTML canvas lets makers drag Michigan-specific gear onto live trail layers for Tahquamenon and Pictured Rocks. Auto-calcs pack weight, snow depth fit, and hunting season\u2026",
+    "monetization": "Free core canvas and basic UP trail layers. Pro unlocks offline JSON export and custom trail uploads.",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "harbor-ledger",
+    "slug": "harbor-ledger",
+    "title": "Harbor Ledger",
+    "url": "https://harbor-ledger.vercel.app",
+    "blurb": "Single-file static HTML that lets photographers compose elegant one-page estimates and invoices with live SVG canvas preview; line items render as framed exposures under\u2026",
+    "monetization": "Free core composer and basic golden-hour templates; pro unlocks curated Great Lakes dusk location presets with pre-filled rates and seasonal surcharges",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "rivetmesh-health-grid",
+    "slug": "rivetmesh-health-grid",
+    "title": "RivetMesh Health Grid",
+    "url": "https://rivetmesh-health-grid.vercel.app",
+    "blurb": "Single static brutalist dashboard for ops mesh health: nodes as checklist items with status toggles, edge connectors via click, and monospace copy-to-clipboard reports.",
+    "monetization": "Free single-view grid with local persistence; Pro unlocks multi-board load/save and preset mesh templates",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "aurora-loom-skill",
+    "slug": "aurora-loom-skill",
+    "title": "Aurora Loom Skill",
+    "url": "https://aurora-loom-skill.vercel.app",
+    "blurb": "Installable SKILL.md that trains agents to orchestrate Northern Forge MCP tools for hyper-local Northern Michigan golden/blue hour windows, exposure math, and composition framing at secret shoreline and inland locations. Unique because it layers poetic light-direction prompts with live canvas feedback and stigmergic location memory, turning raw MCP calls into gallery-ready shot plans instead of generic calculators.",
+    "monetization": "Free core skill + calculator; pro unlocks 40+ secret location presets and custom exposure recipes",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "mapleway-roster",
+    "slug": "mapleway-roster",
+    "title": "Mapleway Roster",
+    "url": "https://mapleway-roster.vercel.app",
+    "blurb": "Static trail-map habit logger where daily chores and meals become draggable waypoints on a woodland path; users tap markers to log progress with soft kitchen-note prompts. Unique agent value: simple JS-callable hooks let",
+    "monetization": "Free personal trails with local storage; pro unlocks household sharing via copy-paste JSON bundles and printable map PDFs",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "voidmote-oracle",
+    "slug": "voidmote-oracle",
+    "title": "Voidmote Oracle",
+    "url": "https://voidmote-oracle.vercel.app",
+    "blurb": "MCP server exposing 6 callable tools that let agents generate particle glyphs, roll mood-weighted dice, and derive system-aware names; unique because it fuses stigmergic pattern learning with aurora-north dice logic so agents can request fresh, lore-flavored randomness without human UI",
+    "monetization": "free 100 calls/day + pro preset packs that unlock rarer particle behaviors and custom dice tables",
+    "kind": "mcp_server"
+  },
+  {
+    "product_id": "mote-sigil-dice",
+    "slug": "mote-sigil-dice",
+    "title": "Mote Sigil Dice",
+    "url": "https://mote-sigil-dice.vercel.app",
+    "blurb": "MCP server exposing tools that let agents generate particle glyphs, roll mood-weighted dice, and seed names from void lattices; unique because it turns ephemeral particle states into callable, composable randomness for narrative agents and procedural makers instead of static generators.",
+    "monetization": "free basic tool calls with rate limits; pro unlocks custom mood engines and glyph skin presets via API key",
+    "kind": "mcp_server"
+  },
+  {
+    "product_id": "hearth-type-weaver",
+    "slug": "hearth-type-weaver",
+    "title": "Hearth Type Weaver",
+    "url": "https://hearth-type-weaver.vercel.app",
+    "blurb": "Paste JSON to generate clean, documented TypeScript interfaces with a live 'warm preview' pane showing usage examples and soft inline notes. Unique for makers because the shareable link encodes both the schema and option",
+    "monetization": "Free core generation, live preview and basic sharing; pro unlocks bulk multi-object conversion and custom template presets via future hosted tier",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "rimeglyph-pulse-engine",
+    "slug": "rimeglyph-pulse-engine",
+    "title": "Rimeglyph Pulse Engine",
+    "url": "https://rimeglyph-pulse-engine.vercel.app",
+    "blurb": "Static canvas tool that converts short phrases into evolving aurora-particle glyphs whose motion and color reflect detected mood vectors; makers tweak live parameters while agents can call the generation logic for instan",
+    "monetization": "Free engine with core particle glyphs and mood detection; pro unlocks rare aurora skins, exportable preset packs, and extended trail memory",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "driftline-pack-canvas",
+    "slug": "driftline-pack-canvas",
+    "title": "Driftline Pack Canvas",
+    "url": "https://driftline-pack-canvas-menoxcides-projects.vercel.app",
+    "blurb": "Static canvas tool where users drag Michigan trail gear onto stylized UP lake maps, then tweak snow depth and hunting season sliders for instant weight and balance feedback. Unique because field agents can simulate exact",
+    "monetization": "Free canvas core with basic Michigan trails + pro pack for offline export and custom route saves",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "typecast-anvil",
+    "slug": "typecast-anvil",
+    "title": "Typecast Anvil",
+    "url": "https://typecast-anvil-menoxcides-projects.vercel.app",
+    "blurb": "Paste JSON, instantly output TypeScript interfaces with nested type support and URL-shareable state. Makers get keyboard-driven editing, live error feedback, and one-click copy; unique via spatial tree view of generated ",
+    "monetization": "free core generator with instant share; pro unlocks batch paste, saved history, and export bundles",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "lens-maker-utility",
+    "slug": "lens-maker-utility",
+    "title": "Lens Maker utility",
+    "url": "https://lens-maker-utility-menoxcides-projects.vercel.app",
+    "blurb": "MVP utility with distinct persona design",
+    "monetization": "Free calculator + pro location presets",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "ceo-shipper-utility",
+    "slug": "ceo-shipper-utility",
+    "title": "CEO Shipper utility",
+    "url": "https://ceo-shipper-utility-menoxcides-projects.vercel.app",
+    "blurb": "MVP utility with distinct persona design",
+    "monetization": "Hard paywall on the useful half",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "remote-action-checklist",
+    "slug": "remote-action-checklist",
+    "title": "Remote action checklist",
+    "url": "https://northern-forge-labs.vercel.app/tools/remote-action-checklist",
+    "blurb": "Turn a typed or spoken intent into a reviewable checklist of PC or mesh actions. Approve, copy, export. Nothing runs until you say so.",
+    "monetization": "Free core + $4.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "case-converter-snake-camel-pascal-kebab",
+    "slug": "case-converter-snake-camel-pascal-kebab",
+    "title": "Case converter snake camel pascal kebab",
+    "url": "https://case-converter-snake-camel-pascal-kebab-menoxcides-projects.vercel.app",
+    "blurb": "MVP utility with distinct persona design",
+    "monetization": "Hard paywall on the useful half",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "freelancer-invoice-skill",
+    "slug": "freelancer-invoice-skill",
+    "title": "Freelancer Invoice Skill",
+    "url": "https://northern-forge-labs.vercel.app/tools/freelancer-invoice-skill",
+    "blurb": "Installable skill: generate clean freelancer invoices and estimates with line items, tax, and print-ready totals via MCP + free web tool.",
+    "monetization": "Free skill",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "outdoor-golden-hour-skill",
+    "slug": "outdoor-golden-hour-skill",
+    "title": "Outdoor Golden Hour Skill",
+    "url": "https://northern-forge-labs.vercel.app/tools/outdoor-golden-hour-skill",
+    "blurb": "Installable skill: plan northern outdoor shoots with golden-hour windows and pack weight totals agents can call without a dashboard.",
+    "monetization": "Free skill",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "prompt-variants-skill",
+    "slug": "prompt-variants-skill",
+    "title": "Prompt Variants Skill",
+    "url": "https://northern-forge-labs.vercel.app/tools/prompt-variants-skill",
+    "blurb": "Installable skill: turn one goal + notes into distinct Claude, GPT, and Grok prompts agents can forge without accounts.",
+    "monetization": "Free skill",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "agent-tool-receipt",
+    "slug": "agent-tool-receipt",
+    "title": "Agent Tool-Call Receipt",
+    "url": "https://northern-forge-labs.vercel.app/tools/agent-tool-receipt",
+    "blurb": "Paste an MCP or agent tool trace \u2192 get a clean receipt: tools called, args summary, errors, and a next-fix checklist. Built for builders debugging agent sessions.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "lake-effect-go-nogo",
+    "slug": "lake-effect-go-nogo",
+    "title": "Lake-Effect Go / No-Go Strip",
+    "url": "https://northern-forge-labs.vercel.app/tools/lake-effect-go-nogo",
+    "blurb": "Pick a UP corridor and pull live wind/temp \u2014 get a free go / caution / no-go strip for lake-effect bands before you drive or run.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "unlock-ledger-skill",
+    "slug": "unlock-ledger-skill",
+    "title": "Schema-First Unlock Ledger Skill",
+    "url": "https://northern-forge-labs.vercel.app/tools/unlock-ledger-skill",
+    "blurb": "Installable skill for agents: verify Stripe Checkout sessions, map product_id, and never grant Pro from ?unlocked=1 or client flags alone.",
+    "monetization": "Free skill",
+    "kind": "agent_skill"
+  },
+  {
+    "product_id": "model-prompt-router",
+    "slug": "model-prompt-router",
+    "title": "Model Prompt Router Board",
+    "url": "https://northern-forge-labs.vercel.app/tools/model-prompt-router",
+    "blurb": "One goal in \u2192 three model-ready prompt cards (Claude, GPT, Grok) with hard constraints and live character budgets. Copy each card when it fits the limit.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "tool-schema-diff",
+    "slug": "tool-schema-diff",
+    "title": "Tool Schema Diff Desk",
+    "url": "https://northern-forge-labs.vercel.app/tools/tool-schema-diff",
+    "blurb": "Paste old vs new MCP/tool JSON schemas \u2192 get a human break-risk report: renamed tools, required-field changes, type shifts, and safe ship checklist.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "corridor-delay-eta",
+    "slug": "corridor-delay-eta",
+    "title": "Corridor Delay ETA Chip",
+    "url": "https://northern-forge-labs.vercel.app/tools/corridor-delay-eta",
+    "blurb": "Pick a UP corridor, band distance, and speed heuristic \u2192 get a single leave-by / arrive chip before a lake-effect squall crosses your route.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "export-passport",
+    "slug": "export-passport",
+    "title": "Local-First Export Passport",
+    "url": "https://northern-forge-labs.vercel.app/tools/export-passport",
+    "blurb": "Scan listed localStorage keys on this device \u2192 download a JSON/CSV export pack and a wipe checklist before you clear browser storage.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "agent-handoff-packet",
+    "slug": "agent-handoff-packet",
+    "title": "Agent Handoff Packet Forge",
+    "url": "https://northern-forge-labs.vercel.app/tools/agent-handoff-packet",
+    "blurb": "Fill goal \u00b7 done \u00b7 open \u00b7 files \u00b7 verify \u2192 get a paste-ready handoff packet for the next agent mid-task, with markdown or plain formats.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "trailhead-freeze-thaw",
+    "slug": "trailhead-freeze-thaw",
+    "title": "UP Trailhead Freeze-Thaw Strip",
+    "url": "https://northern-forge-labs.vercel.app/tools/trailhead-freeze-thaw",
+    "blurb": "Pick a UP trailhead and pull overnight min forecast \u2192 freeze-thaw caution strip for boots vs spikes before you leave the lot.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "invoice-line-math",
+    "slug": "invoice-line-math",
+    "title": "Invoice Line Math Desk",
+    "url": "https://northern-forge-labs.vercel.app/tools/invoice-line-math",
+    "blurb": "Paste line items as qty \u00d7 rate \u2192 get subtotal, tax, total, and a clean table you can drop into an invoice before you send.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "mcp-tools-list-health",
+    "slug": "mcp-tools-list-health",
+    "title": "MCP tools/list Health Card",
+    "url": "https://northern-forge-labs.vercel.app/tools/mcp-tools-list-health",
+    "blurb": "Paste a tools/list payload \u2192 health card: tool count, missing schemas, required-field gaps, and rename risks before clients add your server.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "keweenaw-fog-commute",
+    "slug": "keweenaw-fog-commute",
+    "title": "Keweenaw Fog Commute Chip",
+    "url": "https://northern-forge-labs.vercel.app/tools/keweenaw-fog-commute",
+    "blurb": "Dewpoint spread + wind heuristic for named Keweenaw corridors \u2014 go / slow / delay chip before lake fog wipes visibility on the commute.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "regex-capture-namer",
+    "slug": "regex-capture-namer",
+    "title": "Regex Capture Namer",
+    "url": "https://northern-forge-labs.vercel.app/tools/regex-capture-namer",
+    "blurb": "Paste a regex + samples \u2192 named-group rewrite suggestions and a match table before you merge production patterns.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "mcp-resource-uri-linter",
+    "slug": "mcp-resource-uri-linter",
+    "title": "MCP Resource URI Linter",
+    "url": "https://northern-forge-labs.vercel.app/tools/mcp-resource-uri-linter",
+    "blurb": "Paste resources/list JSON \u2192 URI scheme checks, missing names, template gaps, and duplicate URIs before clients list resources.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "shore-ice-wind-chill",
+    "slug": "shore-ice-wind-chill",
+    "title": "Shore Ice Wind Chill Strip",
+    "url": "https://northern-forge-labs.vercel.app/tools/shore-ice-wind-chill",
+    "blurb": "Named Marquette & Keweenaw shore spots + wind/temp \u2192 chill and spray caution strip before a short walk on the rocks.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "json-path-probe",
+    "slug": "json-path-probe",
+    "title": "JSON Path Probe Desk",
+    "url": "https://northern-forge-labs.vercel.app/tools/json-path-probe",
+    "blurb": "Paste JSON \u2192 path probe table with types, nulls, and copy-ready accessors before writing client code.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "prompt-token-budget",
+    "slug": "prompt-token-budget",
+    "title": "Prompt Token Budget Board",
+    "url": "https://northern-forge-labs.vercel.app/tools/prompt-token-budget",
+    "blurb": "Paste prompt sections \u2192 rough token budget bars and a cut list when over limit before you send a long agent turn.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "up-whiteout-driving",
+    "slug": "up-whiteout-driving",
+    "title": "UP Whiteout Driving Chip",
+    "url": "https://northern-forge-labs.vercel.app/tools/up-whiteout-driving",
+    "blurb": "Corridor + wind/snow heuristic \u2192 go / slow / park chip when whiteout may erase lane lines on UP roads.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "env-var-leak-scanner",
+    "slug": "env-var-leak-scanner",
+    "title": "Env Var Leak Scanner",
+    "url": "https://northern-forge-labs.vercel.app/tools/env-var-leak-scanner",
+    "blurb": "Paste text \u2192 flag likely API keys, tokens, and .env-shaped secrets with redaction copy before a public gist or screenshot.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "agent-eval-rubric",
+    "slug": "agent-eval-rubric",
+    "title": "Agent Eval Rubric Desk",
+    "url": "https://northern-forge-labs.vercel.app/tools/agent-eval-rubric",
+    "blurb": "Score goal, tools, evidence, and next fix \u2192 one paste-ready pass/fail rubric card after an agent tool session.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  },
+  {
+    "product_id": "bridge-lift-wait",
+    "slug": "bridge-lift-wait",
+    "title": "Bridge Lift Wait Window",
+    "url": "https://northern-forge-labs.vercel.app/tools/bridge-lift-wait",
+    "blurb": "Pick Portage crossing + delay minutes \u2192 leave-by / wait chip when a lift might blow the Houghton\u2013Hancock run.",
+    "monetization": "Free core + $3.99 pro",
+    "kind": "web_tool"
+  }
+]

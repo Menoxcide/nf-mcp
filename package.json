@@ -1,0 +1,9 @@
+{
+  "name": "nf-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Northern Forge MCP server — agent-callable tools for the product catalog, popular ranks, events, and forge utilities",
+  "engines": {
+    "node": ">=18"
+  }
+}

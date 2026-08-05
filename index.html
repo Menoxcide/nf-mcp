@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" data-nf-qol="diamond">
+<head>
+  <meta name="color-scheme" content="dark"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Northern Forge MCP — tools any agent can call</title>
+  <meta name="description" content="Portable MCP tools for any agent: diff, cron, units, JSON→TS, base64, UUID, CSV→markdown, golden hour, pack weight, prompts. Free core." />
+  <meta property="og:title" content="Northern Forge MCP" />
+  <meta property="og:description" content="Callable job tools for Claude, Cursor, Grok, and Gemini — free core, clear schemas." />
+  <meta property="og:image" content="https://northern-forge-labs.vercel.app/assets/brand/og-card.jpg" />
+  <link rel="icon" href="https://northern-forge-labs.vercel.app/assets/brand/mark.jpg" />
+  <link rel="stylesheet" href="https://northern-forge-labs.vercel.app/assets/brand/nf-glass.css" />
+  <style>
+    :root { --bg:#070b14; --card:#121a2e; --line:#24314d; --tx:#e8f1ff; --mut:#8aa0c0; --gold:#f6b73c; --cyan:#5ef0c0; --ok:#5ef0c0; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, sans-serif; color:var(--tx); background: radial-gradient(900px 480px at 12% -8%, #1a2a4a, var(--bg)); min-height:100vh; line-height:1.55; }
+    a { color: var(--cyan); }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+    h1 { letter-spacing: -.02em; margin: .4rem 0 .5rem; font-size: clamp(1.6rem, 4vw, 2.1rem); }
+    .lede { color: var(--mut); max-width: 44rem; margin: 0 0 1rem; }
+    .sub { color: var(--mut); font-size: .95rem; max-width: 42rem; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 1.1rem 1.2rem; margin: 1rem 0; }
+    .card h2 { margin: 0 0 .6rem; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mut); }
+    code, pre { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .82rem; }
+    pre { background: #0a1220; border: 1px solid #1e2a42; border-radius: 12px; padding: 1rem; overflow: auto; color: #c8e6ff; }
+    .chip { display:inline-block; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); border:1px solid #4a3a1a; padding:.2rem .5rem; border-radius:999px; }
+    ul.tools { margin:.5rem 0 0; padding-left: 1.1rem; color: var(--mut); }
+    ul.tools strong { color: var(--tx); }
+    ul.tools .ops { opacity: .65; }
+    .benefits { display: grid; gap: .65rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: .75rem; }
+    .benefit { padding: .75rem .85rem; border-radius: 12px; background: #0d1526; border: 1px solid #24314d; font-size: .88rem; color: var(--mut); }
+    .benefit strong { display: block; color: var(--tx); margin-bottom: .25rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: .65rem; margin: 1rem 0; }
+    .btn { display:inline-flex; align-items:center; padding:.7rem 1.1rem; border-radius:12px; font-weight:700; font-size:.9rem; border:1px solid transparent; text-decoration:none!important; cursor:pointer; }
+    .btn-primary { background: linear-gradient(135deg,#f6b73c,#e08a1e); color:#1a1205; }
+    .btn-ghost { background: transparent; color: var(--tx); border-color: var(--line); }
+    .hubbar { display:flex; flex-wrap:wrap; gap:.75rem; align-items:center; justify-content:space-between; margin-bottom:1rem; font-size:.9rem; }
+    .hubbar a { color: var(--mut); }
+    footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--mut); font-size: .85rem; }
+    #status { min-height: 1.2rem; color: var(--ok); font-size: .9rem; margin-top: .5rem; }
+    select, button { min-height: 44px; }
+  </style>
+  <script src="https://northern-forge-labs.vercel.app/js/nf-fluid.js" defer></script>
+  <script src="https://northern-forge-labs.vercel.app/js/nf-glass.js" defer></script>
+<script>window.NF_API="https://nf-conversion.vercel.app";window.NF_PRODUCT_ID="northern-forge-mcp";</script>
+<script src="https://northern-forge-labs.vercel.app/js/nf-magic.js" defer></script>
+</head>
+<body data-nf-fluid="1" class="nf-glass" data-product-id="northern-forge-mcp">
+  <div class="wrap nf-shell">
+    <div class="hubbar">
+      <a href="https://northern-forge-labs.vercel.app">← Northern Forge Labs</a>
+      <span>
+        <a href="https://northern-forge-labs.vercel.app/agents">Skills &amp; MCP docs</a> ·
+        <a href="https://northern-forge-labs.vercel.app/revenue">Unlocks</a> ·
+        <a href="https://x.com/NForge26">@NForge26</a>
+      </span>
+    </div>
+
+    <span class="chip">Flagship MCP · free core</span>
+    <h1>Northern Forge MCP</h1>
+    <p class="lede"><strong style="color:var(--tx)">Tools your agent can call today</strong> — diff, cron, units, JSON→TS, base64, UUID, CSV tables, WCAG contrast, golden hour, pack weight, prompts. Use MCP JSON-RPC or plain REST.</p>
+    <p class="sub">Free cores, typed schemas, no account required to list or call. Built for Claude, Cursor, Grok, Gemini, and custom agents.</p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/tools" id="cta-list">List tools (REST)</a>
+      <a class="btn btn-ghost" href="/mcp" id="cta-mcp">MCP discovery</a>
+      <a class="btn btn-ghost" href="https://northern-forge-labs.vercel.app/agents">Install docs</a>
+      <button class="btn btn-ghost" type="button" id="cta-ping" data-product-id="northern-forge-mcp">Ping forge_status</button>
+    </div>
+    <div id="status" role="status" aria-live="polite"></div>
+
+    <div class="card nf-glass">
+      <h2>Benefits</h2>
+      <div class="benefits">
+        <div class="benefit"><strong>Typed tools</strong>Clear JSON schemas — list, call, no HTML scraping.</div>
+        <div class="benefit"><strong>Real jobs</strong>Converters and builders agents use weekly — not hello/ping shells.</div>
+        <div class="benefit"><strong>Dual surface</strong>MCP at <code>/mcp</code> · REST at <code>/tools</code>.</div>
+        <div class="benefit"><strong>Free to try</strong>Core tools run without a card. Optional pro later for higher limits.</div>
+      </div>
+    </div>
+
+    <div class="card nf-glass">
+      <h2>Endpoints</h2>
+      <ul class="tools">
+        <li>Base · <code>https://nf-mcp.vercel.app</code></li>
+        <li><code>POST /mcp</code> — MCP JSON-RPC</li>
+        <li><code>POST /tools</code> — REST list/call</li>
+        <li><a href="https://northern-forge-labs.vercel.app/agents">Skills &amp; MCP install</a></li>
+      </ul>
+    </div>
+
+    <div class="card nf-glass">
+      <h2>Tools</h2>
+      <ul class="tools" id="tools"><li>loading…</li></ul>
+    </div>
+
+    <div class="card nf-glass">
+      <h2>Quick call</h2>
+      <label for="tool-select" class="sub">Tool</label>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0 1rem;align-items:center">
+        <select id="tool-select" aria-label="Tool name" style="background:#0a1220;color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem"></select>
+        <button class="btn btn-ghost" type="button" id="btn-example">Example</button>
+        <button class="btn btn-ghost" type="button" id="btn-magic">✨ Magic args</button>
+        <button class="btn btn-primary" type="button" id="run-tool">Run</button>
+      </div>
+      <pre id="out" aria-label="Tool output">// result appears here</pre>
+      <pre>curl -s https://nf-mcp.vercel.app/tools \
+  -H 'content-type: application/json' \
+  -d '{"name":"json_to_ts","arguments":{"json":"{\"id\":1,\"name\":\"forge\"}"}}'</pre>
+    </div>
+
+    <footer>
+      Brand: <strong>Northern Forge Labs</strong> ·
+      <a href="https://x.com/NForge26">@NForge26</a> ·
+      <a href="https://northern-forge-labs.vercel.app">Hub</a> ·
+      Free core · portable tools for any agent
+    </footer>
+  </div>
+  <script>
+    (function () {
+      var API = location.origin;
+      window.NF_PRODUCT_ID = 'northern-forge-mcp';
+      window.NF_API = 'https://nf-conversion.vercel.app';
+      var TOOLS = {};
+      function track(type, extra) {
+        try {
+          navigator.sendBeacon(
+            'https://nf-conversion.vercel.app/api/event',
+            new Blob([JSON.stringify(Object.assign({
+              type: type,
+              product_id: 'northern-forge-mcp',
+              path: location.pathname,
+              source: 'nf-mcp-landing'
+            }, extra || {}))], { type: 'application/json' })
+          );
+        } catch (e) {}
+      }
+      function callTool(name, args) {
+        return fetch(API + '/tools', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ name: name, arguments: args || {} })
+        }).then(function (r) { return r.json(); });
+      }
+      function exampleFor(name) {
+        var t = TOOLS[name];
+        if (t && t.example) return JSON.parse(JSON.stringify(t.example));
+        if (t && t.examples && t.examples.length) {
+          return JSON.parse(JSON.stringify(t.examples[Math.floor(Math.random()*t.examples.length)]));
+        }
+        return {};
+      }
+      function showArgs(args) {
+        document.getElementById('out').textContent = '// args\n' + JSON.stringify(args, null, 2);
+        window.__NF_LAST_ARGS__ = args;
+      }
+      track('product_view');
+      fetch(API + '/tools').then(function (r) { return r.json(); }).then(function (d) {
+        var el = document.getElementById('tools');
+        var tools = d.tools || [];
+        var sel = document.getElementById('tool-select');
+        if (sel) {
+          sel.innerHTML = '';
+          tools.forEach(function (t) {
+            TOOLS[t.name] = t;
+            if (t.localOnly) return;
+            var opt = document.createElement('option');
+            opt.value = t.name;
+            opt.textContent = t.name;
+            sel.appendChild(opt);
+          });
+        } else {
+          tools.forEach(function (t) { TOOLS[t.name] = t; });
+        }
+        el.innerHTML = tools.map(function (t) {
+          var ops = t.localOnly || (t.description && t.description.indexOf('[Local ops]') === 0);
+          return '<li class="' + (ops ? 'ops' : '') + '"><strong>' + t.name + '</strong> — ' + (t.description || '') + '</li>';
+        }).join('') || '<li>No tools</li>';
+        showArgs(exampleFor(sel.value));
+      }).catch(function () {
+        document.getElementById('tools').innerHTML = '<li>Could not load tools list</li>';
+      });
+      document.getElementById('tool-select').addEventListener('change', function () {
+        showArgs(exampleFor(this.value));
+      });
+      document.getElementById('btn-example').addEventListener('click', function () {
+        var name = document.getElementById('tool-select').value;
+        var t = TOOLS[name];
+        var args = exampleFor(name);
+        if (t && t.examples && t.examples.length > 1) {
+          args = JSON.parse(JSON.stringify(t.examples[Math.floor(Math.random()*t.examples.length)]));
+        }
+        showArgs(args);
+        track('cta_click', { action: 'example', tool: name });
+      });
+      document.getElementById('btn-magic').addEventListener('click', function () {
+        var name = document.getElementById('tool-select').value;
+        var t = TOOLS[name] || { name: name };
+        var btn = this;
+        function offline() {
+          var args = exampleFor(name);
+          showArgs(args);
+        }
+        if (!window.nfMagic) { offline(); return; }
+        window.nfMagic.magic(btn, 'sample_tool_args', {
+          tool_name: name,
+          description: t.description || '',
+          schema: t.inputSchema || {},
+          seed: String(Date.now()) + Math.random()
+        }, function (out) {
+          var payload = (out && out.data) || out || {}; var args = payload.args || null; var text = payload.text || '';
+          if (!args && out && out.text) {
+            try { args = JSON.parse((out.text.match(/\{[\s\S]*\}/)||[])[0]); } catch(e) {}
+          }
+          if (args) showArgs(args); else offline();
+        }, { product_id: 'northern-forge-mcp' }).catch(offline);
+        track('cta_click', { action: 'magic_args', tool: name });
+      });
+      document.getElementById('cta-ping').addEventListener('click', function () {
+        var st = document.getElementById('status');
+        st.textContent = 'Calling forge_status…';
+        track('cta_click', { action: 'ping' });
+        callTool('forge_status', {}).then(function (j) {
+          st.textContent = j.ok ? ('OK · ' + (j.public_tool_count || j.product_count || '?') + ' public tools · ' + (j.mcp_http || '')) : ('Error: ' + (j.error || 'fail'));
+          document.getElementById('out').textContent = JSON.stringify(j, null, 2);
+        }).catch(function (e) {
+          st.textContent = 'Failed: ' + e.message;
+        });
+      });
+      document.getElementById('run-tool').addEventListener('click', function () {
+        var name = document.getElementById('tool-select').value;
+        var args = window.__NF_LAST_ARGS__ || exampleFor(name);
+        track('cta_click', { action: 'run', tool: name });
+        callTool(name, args).then(function (j) {
+          document.getElementById('out').textContent = JSON.stringify(j, null, 2);
+        }).catch(function (e) {
+          document.getElementById('out').textContent = String(e);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
