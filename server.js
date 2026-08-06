@@ -2,15 +2,17 @@
 /**
  * Northern Forge MCP — stdio transport (Claude Desktop, Glama, mcp-proxy).
  *
- * Glama runs: mcp-proxy -- node|tsx server.js
- * Speaks MCP JSON-RPC over stdin/stdout with Content-Length framing.
- * Tool implementations live in lib/tools.js (same as hosted HTTP).
+ * Framing: MCP stdio is **newline-delimited JSON-RPC** (one message per line).
+ * Content-Length (LSP-style) is also accepted for older clients.
+ * Never write logs to stdout — that corrupts the MCP stream.
+ *
+ * Glama runs: mcp-proxy -- node server.js
+ * Tool implementations: lib/tools.js (same as hosted HTTP).
  */
 'use strict';
 
 const { toolDefs, callTool } = require('./lib/tools');
 
-// Never write logs to stdout — that corrupts the MCP stream.
 const log = (...args) => {
   try {
     process.stderr.write(args.map(String).join(' ') + '\n');
@@ -20,9 +22,8 @@ const log = (...args) => {
 };
 
 function send(msg) {
-  const body = JSON.stringify(msg);
-  const frame = `Content-Length: ${Buffer.byteLength(body, 'utf8')}\r\n\r\n${body}`;
-  process.stdout.write(frame);
+  // NDJSON: one JSON-RPC message per line (MCP stdio transport)
+  process.stdout.write(JSON.stringify(msg) + '\n');
 }
 
 function jsonRpcResult(id, result) {
@@ -42,7 +43,6 @@ async function handleMessage(msg) {
     return jsonRpcError(null, -32600, 'Invalid Request');
   }
 
-  // Notifications have no id — no response
   const isNotification = !Object.prototype.hasOwnProperty.call(msg, 'id');
   const { id, method, params } = msg;
 
@@ -57,28 +57,28 @@ async function handleMessage(msg) {
         return jsonRpcResult(id, {
           protocolVersion:
             (params && params.protocolVersion) || '2024-11-05',
-          capabilities: { tools: {} },
+          capabilities: {
+            tools: { listChanged: false },
+          },
           serverInfo: {
             name: 'northern-forge-mcp',
-            version: '1.0.0',
-            description:
-              'Northern Forge free-core agent tools: diff, cron, units, JSON→TS, golden hour, pack weight, prompts',
+            version: '1.0.1',
           },
         });
 
       case 'notifications/initialized':
       case 'initialized':
       case 'notifications/cancelled':
+      case 'notifications/roots/list_changed':
         return null;
 
       case 'ping':
         return jsonRpcResult(id, {});
 
       case 'tools/list': {
-        // Public tools only for registry introspection (no local-only ops)
         const tools = toolDefs({ includeLocal: false }).map((t) => ({
           name: t.name,
-          description: t.description,
+          description: t.description || t.name,
           inputSchema: t.inputSchema || {
             type: 'object',
             properties: {},
@@ -98,13 +98,15 @@ async function handleMessage(msg) {
         const text = JSON.stringify(result, null, 2);
         return jsonRpcResult(id, {
           content: [{ type: 'text', text }],
-          structuredContent: result,
           isError: !!(result && result.ok === false),
         });
       }
 
       case 'resources/list':
         return jsonRpcResult(id, { resources: [] });
+
+      case 'resources/templates/list':
+        return jsonRpcResult(id, { resourceTemplates: [] });
 
       case 'prompts/list':
         return jsonRpcResult(id, { prompts: [] });
@@ -120,46 +122,15 @@ async function handleMessage(msg) {
   }
 }
 
-// --- Content-Length framed stdin reader (MCP / LSP style) ---
+// --- stdin: NDJSON primary, Content-Length fallback ---
 let buf = Buffer.alloc(0);
-
-function tryConsume() {
-  while (true) {
-    const headerEnd = buf.indexOf('\r\n\r\n');
-    if (headerEnd === -1) return;
-
-    const header = buf.slice(0, headerEnd).toString('utf8');
-    const match = /Content-Length:\s*(\d+)/i.exec(header);
-    if (!match) {
-      // Drop garbage line and keep scanning
-      const nl = buf.indexOf('\n');
-      buf = nl === -1 ? Buffer.alloc(0) : buf.slice(nl + 1);
-      continue;
-    }
-
-    const len = parseInt(match[1], 10);
-    const bodyStart = headerEnd + 4;
-    if (buf.length < bodyStart + len) return;
-
-    const body = buf.slice(bodyStart, bodyStart + len).toString('utf8');
-    buf = buf.slice(bodyStart + len);
-
-    let msg;
-    try {
-      msg = JSON.parse(body);
-    } catch (e) {
-      send(jsonRpcError(null, -32700, 'Parse error'));
-      continue;
-    }
-
-    // Fire async; order is preserved per request by awaiting in sequence
-    queue.push(msg);
-    drain();
-  }
-}
-
 const queue = [];
 let draining = false;
+
+function enqueue(msg) {
+  queue.push(msg);
+  drain();
+}
 
 async function drain() {
   if (draining) return;
@@ -179,6 +150,73 @@ async function drain() {
   draining = false;
 }
 
+function parseJsonBody(body) {
+  try {
+    return JSON.parse(body);
+  } catch {
+    send(jsonRpcError(null, -32700, 'Parse error'));
+    return null;
+  }
+}
+
+function tryConsume() {
+  while (buf.length) {
+    // Prefer Content-Length if present at start of buffer
+    const asText = buf.toString('utf8');
+    if (/^Content-Length:\s*\d+/i.test(asText)) {
+      const headerEnd = buf.indexOf('\r\n\r\n');
+      if (headerEnd === -1) {
+        // Incomplete headers; wait for more data
+        if (buf.indexOf('\n\n') === -1) return;
+        // Tolerate LF-only headers
+        const altEnd = buf.indexOf('\n\n');
+        if (altEnd === -1) return;
+        const header = buf.slice(0, altEnd).toString('utf8');
+        const match = /Content-Length:\s*(\d+)/i.exec(header);
+        if (!match) {
+          buf = buf.slice(altEnd + 2);
+          continue;
+        }
+        const len = parseInt(match[1], 10);
+        const bodyStart = altEnd + 2;
+        if (buf.length < bodyStart + len) return;
+        const body = buf.slice(bodyStart, bodyStart + len).toString('utf8');
+        buf = buf.slice(bodyStart + len);
+        const msg = parseJsonBody(body);
+        if (msg) enqueue(msg);
+        continue;
+      }
+      const header = buf.slice(0, headerEnd).toString('utf8');
+      const match = /Content-Length:\s*(\d+)/i.exec(header);
+      if (!match) {
+        buf = buf.slice(headerEnd + 4);
+        continue;
+      }
+      const len = parseInt(match[1], 10);
+      const bodyStart = headerEnd + 4;
+      if (buf.length < bodyStart + len) return;
+      const body = buf.slice(bodyStart, bodyStart + len).toString('utf8');
+      buf = buf.slice(bodyStart + len);
+      const msg = parseJsonBody(body);
+      if (msg) enqueue(msg);
+      continue;
+    }
+
+    // NDJSON: one complete line = one message
+    const nl = buf.indexOf('\n');
+    if (nl === -1) return;
+
+    let line = buf.slice(0, nl).toString('utf8');
+    buf = buf.slice(nl + 1);
+    if (line.endsWith('\r')) line = line.slice(0, -1);
+    line = line.trim();
+    if (!line) continue;
+
+    const msg = parseJsonBody(line);
+    if (msg) enqueue(msg);
+  }
+}
+
 process.stdin.on('data', (chunk) => {
   buf = Buffer.concat([buf, chunk]);
   tryConsume();
@@ -193,6 +231,10 @@ process.stdin.on('error', (e) => {
   process.exit(1);
 });
 
-// Stay alive; mcp-proxy will talk over stdio
+// Keep process alive for long-lived stdio sessions
 process.stdin.resume();
+if (typeof process.stdin.unref !== 'function') {
+  /* ignore */
+}
+
 log('northern-forge-mcp stdio ready');
