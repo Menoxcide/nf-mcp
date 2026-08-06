@@ -1,14 +1,36 @@
 {
   "name": "nf-mcp",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Northern Forge MCP server \u2014 agent-callable tools for the product catalog, popular ranks, events, and forge utilities",
+  "version": "1.0.1",
+  "private": false,
+  "description": "Northern Forge MCP — free-core agent tools with typed schemas (diff, cron, units, JSON→TS, golden hour, pack weight, prompts). Hosted: https://nf-mcp.vercel.app/mcp",
+  "license": "MIT",
+  "author": "Justin Kamen <justin@justindkamen.com>",
+  "homepage": "https://nf-mcp.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Menoxcide/nf-mcp.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "northern-forge",
+    "agent-tools"
+  ],
   "engines": {
     "node": ">=18"
   },
+  "main": "server.js",
+  "bin": {
+    "northern-forge-mcp": "server.js"
+  },
   "scripts": {
     "start": "node server.js",
-    "health": "node -e \"require('http').get('http://127.0.0.1:8080/health',r=>r.pipe(process.stdout))\""
+    "start:stdio": "node server.js",
+    "start:http": "node http-server.js",
+    "mcp": "node server.js"
   },
-  "main": "server.js"
+  "dependencies": {
+    "tsx": "^4.19.2"
+  }
 }

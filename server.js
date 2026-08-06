@@ -1,130 +1,198 @@
+#!/usr/bin/env node
 /**
- * Standalone HTTP server for Docker / Glama introspection.
- * MCP JSON-RPC: POST /mcp  |  REST: GET/POST /tools  |  health: GET /health
+ * Northern Forge MCP — stdio transport (Claude Desktop, Glama, mcp-proxy).
+ *
+ * Glama runs: mcp-proxy -- node|tsx server.js
+ * Speaks MCP JSON-RPC over stdin/stdout with Content-Length framing.
+ * Tool implementations live in lib/tools.js (same as hosted HTTP).
  */
-const http = require('http');
+'use strict';
+
 const { toolDefs, callTool } = require('./lib/tools');
 
-const PORT = Number(process.env.PORT || 8080);
+// Never write logs to stdout — that corrupts the MCP stream.
+const log = (...args) => {
+  try {
+    process.stderr.write(args.map(String).join(' ') + '\n');
+  } catch {
+    /* ignore */
+  }
+};
 
-function send(res, status, body, headers = {}) {
-  const data = typeof body === 'string' ? body : JSON.stringify(body);
-  res.writeHead(status, {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept, Mcp-Session-Id',
-    ...headers,
-  });
-  res.end(data);
+function send(msg) {
+  const body = JSON.stringify(msg);
+  const frame = `Content-Length: ${Buffer.byteLength(body, 'utf8')}\r\n\r\n${body}`;
+  process.stdout.write(frame);
 }
 
 function jsonRpcResult(id, result) {
   return { jsonrpc: '2.0', id: id ?? null, result };
 }
-function jsonRpcError(id, code, message) {
-  return { jsonrpc: '2.0', id: id ?? null, error: { code, message } };
+
+function jsonRpcError(id, code, message, data) {
+  return {
+    jsonrpc: '2.0',
+    id: id ?? null,
+    error: { code, message, ...(data !== undefined ? { data } : {}) },
+  };
 }
 
-async function handleMcp(msg) {
-  if (!msg || typeof msg !== 'object') return jsonRpcError(null, -32600, 'Invalid Request');
+async function handleMessage(msg) {
+  if (!msg || typeof msg !== 'object') {
+    return jsonRpcError(null, -32600, 'Invalid Request');
+  }
+
+  // Notifications have no id — no response
+  const isNotification = !Object.prototype.hasOwnProperty.call(msg, 'id');
   const { id, method, params } = msg;
-  if (!method) return jsonRpcError(id, -32600, 'Missing method');
-  switch (method) {
-    case 'initialize':
-      return jsonRpcResult(id, {
-        protocolVersion: '2024-11-05',
-        capabilities: { tools: {} },
-        serverInfo: {
-          name: 'northern-forge-mcp',
-          version: '1.0.0',
-          description: 'Northern Forge free-core agent tools',
-        },
-      });
-    case 'notifications/initialized':
-    case 'initialized':
-      return null;
-    case 'ping':
-      return jsonRpcResult(id, {});
-    case 'tools/list':
-      return jsonRpcResult(id, { tools: toolDefs() });
-    case 'tools/call': {
-      const name = params?.name;
-      const args = params?.arguments || params?.args || {};
-      if (!name) return jsonRpcError(id, -32602, 'tools/call requires params.name');
-      const result = await callTool(name, args);
-      return jsonRpcResult(id, {
-        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
-        structuredContent: result,
-        isError: result && result.ok === false,
-      });
+
+  if (!method) {
+    if (isNotification) return null;
+    return jsonRpcError(id, -32600, 'Missing method');
+  }
+
+  try {
+    switch (method) {
+      case 'initialize':
+        return jsonRpcResult(id, {
+          protocolVersion:
+            (params && params.protocolVersion) || '2024-11-05',
+          capabilities: { tools: {} },
+          serverInfo: {
+            name: 'northern-forge-mcp',
+            version: '1.0.0',
+            description:
+              'Northern Forge free-core agent tools: diff, cron, units, JSON→TS, golden hour, pack weight, prompts',
+          },
+        });
+
+      case 'notifications/initialized':
+      case 'initialized':
+      case 'notifications/cancelled':
+        return null;
+
+      case 'ping':
+        return jsonRpcResult(id, {});
+
+      case 'tools/list': {
+        // Public tools only for registry introspection (no local-only ops)
+        const tools = toolDefs({ includeLocal: false }).map((t) => ({
+          name: t.name,
+          description: t.description,
+          inputSchema: t.inputSchema || {
+            type: 'object',
+            properties: {},
+          },
+        }));
+        return jsonRpcResult(id, { tools });
+      }
+
+      case 'tools/call': {
+        const name = params && params.name;
+        const args =
+          (params && (params.arguments || params.args)) || {};
+        if (!name) {
+          return jsonRpcError(id, -32602, 'tools/call requires params.name');
+        }
+        const result = await callTool(name, args);
+        const text = JSON.stringify(result, null, 2);
+        return jsonRpcResult(id, {
+          content: [{ type: 'text', text }],
+          structuredContent: result,
+          isError: !!(result && result.ok === false),
+        });
+      }
+
+      case 'resources/list':
+        return jsonRpcResult(id, { resources: [] });
+
+      case 'prompts/list':
+        return jsonRpcResult(id, { prompts: [] });
+
+      default:
+        if (isNotification) return null;
+        return jsonRpcError(id, -32601, `Method not found: ${method}`);
     }
-    case 'resources/list':
-      return jsonRpcResult(id, { resources: [] });
-    case 'prompts/list':
-      return jsonRpcResult(id, { prompts: [] });
-    default:
-      return jsonRpcError(id, -32601, `Method not found: ${method}`);
+  } catch (e) {
+    log('handler error', e && e.stack ? e.stack : e);
+    if (isNotification) return null;
+    return jsonRpcError(id, -32603, String((e && e.message) || e));
   }
 }
 
-const server = http.createServer(async (req, res) => {
-  const url = new URL(req.url || '/', `http://localhost:${PORT}`);
-  if (req.method === 'OPTIONS') {
-    res.writeHead(204, {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization, Accept, Mcp-Session-Id',
-    });
-    return res.end();
-  }
+// --- Content-Length framed stdin reader (MCP / LSP style) ---
+let buf = Buffer.alloc(0);
 
-  if (url.pathname === '/health' && req.method === 'GET') {
-    return send(res, 200, {
-      ok: true,
-      service: 'northern-forge-mcp',
-      status: 'live',
-      public_tools: toolDefs().length,
-    });
-  }
+function tryConsume() {
+  while (true) {
+    const headerEnd = buf.indexOf('\r\n\r\n');
+    if (headerEnd === -1) return;
 
-  if ((url.pathname === '/tools' || url.pathname === '/api/tools') && req.method === 'GET') {
-    return send(res, 200, { ok: true, tools: toolDefs() });
-  }
+    const header = buf.slice(0, headerEnd).toString('utf8');
+    const match = /Content-Length:\s*(\d+)/i.exec(header);
+    if (!match) {
+      // Drop garbage line and keep scanning
+      const nl = buf.indexOf('\n');
+      buf = nl === -1 ? Buffer.alloc(0) : buf.slice(nl + 1);
+      continue;
+    }
 
-  if ((url.pathname === '/mcp' || url.pathname === '/api/mcp' || url.pathname === '/') && req.method === 'GET') {
-    return send(res, 200, {
-      name: 'northern-forge-mcp',
-      mcp: '/mcp',
-      tools: '/tools',
-      health: '/health',
-    });
-  }
+    const len = parseInt(match[1], 10);
+    const bodyStart = headerEnd + 4;
+    if (buf.length < bodyStart + len) return;
 
-  if (req.method === 'POST' && (url.pathname === '/mcp' || url.pathname === '/api/mcp' || url.pathname === '/tools' || url.pathname === '/api/tools')) {
-    let raw = '';
-    for await (const chunk of req) raw += chunk;
-    let body = {};
+    const body = buf.slice(bodyStart, bodyStart + len).toString('utf8');
+    buf = buf.slice(bodyStart + len);
+
+    let msg;
     try {
-      body = raw ? JSON.parse(raw) : {};
-    } catch {
-      return send(res, 400, jsonRpcError(null, -32700, 'Parse error'));
+      msg = JSON.parse(body);
+    } catch (e) {
+      send(jsonRpcError(null, -32700, 'Parse error'));
+      continue;
     }
 
-    // REST tools call
-    if (url.pathname.includes('tools') && body.name) {
-      const result = await callTool(body.name, body.arguments || body.args || {});
-      return send(res, 200, result);
-    }
-
-    const out = await handleMcp(body);
-    if (out === null) return send(res, 204, '');
-    return send(res, 200, out);
+    // Fire async; order is preserved per request by awaiting in sequence
+    queue.push(msg);
+    drain();
   }
+}
 
-  send(res, 404, { ok: false, error: 'not_found' });
+const queue = [];
+let draining = false;
+
+async function drain() {
+  if (draining) return;
+  draining = true;
+  while (queue.length) {
+    const msg = queue.shift();
+    try {
+      const out = await handleMessage(msg);
+      if (out != null) send(out);
+    } catch (e) {
+      log('drain error', e);
+      if (msg && Object.prototype.hasOwnProperty.call(msg, 'id')) {
+        send(jsonRpcError(msg.id, -32603, String((e && e.message) || e)));
+      }
+    }
+  }
+  draining = false;
+}
+
+process.stdin.on('data', (chunk) => {
+  buf = Buffer.concat([buf, chunk]);
+  tryConsume();
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`northern-forge-mcp listening on :${PORT}`);
+process.stdin.on('end', () => {
+  process.exit(0);
 });
+
+process.stdin.on('error', (e) => {
+  log('stdin error', e);
+  process.exit(1);
+});
+
+// Stay alive; mcp-proxy will talk over stdio
+process.stdin.resume();
+log('northern-forge-mcp stdio ready');
