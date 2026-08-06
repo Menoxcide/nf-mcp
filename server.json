@@ -1,8 +1,14 @@
 {
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.Menoxcide/nf-mcp",
-  "description": "Northern Forge MCP — free-core agent tools with typed schemas (diff, cron, units, JSON→TS, golden hour, pack weight, prompts)",
-  "version": "1.0.0",
+  "title": "Northern Forge MCP",
+  "description": "Free-core agent tools with typed schemas (diff, cron, units, JSON\u2192TS, golden hour, pack weight, prompts). No account required.",
+  "version": "1.0.1",
   "websiteUrl": "https://nf-mcp.vercel.app",
+  "repository": {
+    "url": "https://github.com/Menoxcide/nf-mcp",
+    "source": "github"
+  },
   "remotes": [
     {
       "type": "streamable-http",

@@ -57,3 +57,5 @@ Northern Forge Labs — free cores, fair one-time unlocks, dual human + agent su
 
 - X: [@NForge26](https://x.com/NForge26)
 - Catalog: [Menoxcide/northern-forge-products](https://github.com/Menoxcide/northern-forge-products)
+
+<!-- mcp-name: io.github.Menoxcide/nf-mcp -->
