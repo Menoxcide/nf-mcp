@@ -1,14 +1,18 @@
-# Glama build settings (paste into Admin → Build Spec)
+# Glama build settings (Admin → Build Spec)
 
-Glama currently infers `mcp-proxy -- tsx server.js`. The sandbox image does **not** put `node_modules/.bin` on `PATH`, so `tsx` fails with ENOENT even when installed.
+Glama may infer `mcp-proxy -- tsx server.js` and/or add `pnpm run build`.
+This repo is **plain Node JS** (no TypeScript compile). `server.js` is the
+stdio entry; `package.json` includes a no-op `build` so a forced build step
+still succeeds.
 
-## Required Build Spec
+## Recommended Build Spec
 
 ```json
 {
   "baseImage": "debian:trixie-slim",
   "buildSteps": [
-    "pnpm install"
+    "pnpm install",
+    "pnpm run build"
   ],
   "cmdArguments": [
     "mcp-proxy",
@@ -23,21 +27,40 @@ Glama currently infers `mcp-proxy -- tsx server.js`. The sandbox image does **no
 }
 ```
 
-Critical changes vs inferred:
-1. **`tsx` → `node`** (stdio server is plain JS; no TypeScript)
-2. **`pinnedCommit`: null** — do **not** pin `b59bc2b` (that commit is pre-fix)
-3. After save, rebuild so checkout is latest `master`
+### Critical
+
+1. **`tsx` → `node`** in `cmdArguments` (stdio server is plain JS)
+2. **`pinnedCommit`: null** — never pin old commits (`b59bc2b` is pre-fix)
+3. **`pnpm run build` is safe** — no-op script; pure JS, no dist/
+4. After save, **rebuild** so checkout is latest `master`
+5. **LICENSE** is MIT at repo root (fixes Glama “license — not found”)
+
+## Minimal alternative (no build step)
+
+```json
+{
+  "buildSteps": ["pnpm install"],
+  "cmdArguments": ["mcp-proxy", "--", "node", "server.js"],
+  "nodeVersion": "24",
+  "pinnedCommit": null
+}
+```
 
 ## Verify
 
-Docker log must show a commit **after** `b57a448`, e.g.:
+Docker log must show a commit **after** the license/build fix, e.g. HEAD
+message containing `build` + `LICENSE`, and:
 
 ```
-HEAD is now at b57a448 ...
+HEAD is now at <sha> ...
+Done in ... using pnpm ...
+nf-mcp: pure JS, no compile step
 ```
 
-NOT:
+Must **not** fail with:
 
 ```
-HEAD is now at b59bc2b Add Dockerfile and standalone HTTP server
+ERR_PNPM_NO_SCRIPT  Missing script: build
 ```
+
+Must **not** run `tsx server.js` (ENOENT on PATH without node_modules/.bin).

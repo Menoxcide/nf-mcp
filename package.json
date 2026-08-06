@@ -25,12 +25,11 @@
     "northern-forge-mcp": "server.js"
   },
   "scripts": {
+    "build": "node -e \"console.log('nf-mcp: pure JS, no compile step')\"",
     "start": "node server.js",
     "start:stdio": "node server.js",
     "start:http": "node http-server.js",
     "mcp": "node server.js"
   },
-  "dependencies": {
-    "tsx": "^4.19.2"
-  }
+  "dependencies": {}
 }
