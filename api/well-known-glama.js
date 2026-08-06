@@ -16,6 +16,10 @@ module.exports = async (req, res) => {
   }
   res.status(200).json({
     $schema: 'https://glama.ai/mcp/schemas/connector.json',
-    maintainers: [{ email: 'justin@justindkamen.com' }],
+    // Must match the Glama account email used to claim/edit the connector.
+    maintainers: [
+      { email: 'justin.kamen26@gmail.com' },
+      { email: 'justin@justindkamen.com' },
+    ],
   });
 };

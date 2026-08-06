@@ -109,7 +109,10 @@ GET https://nf-mcp.vercel.app/.well-known/glama.json
 ```json
 {
   "$schema": "https://glama.ai/mcp/schemas/connector.json",
-  "maintainers": [{ "email": "justin@justindkamen.com" }]
+  "maintainers": [
+    { "email": "justin.kamen26@gmail.com" },
+    { "email": "justin@justindkamen.com" }
+  ]
 }
 ```
 
