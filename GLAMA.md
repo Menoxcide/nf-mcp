@@ -7,9 +7,12 @@ still succeeds.
 
 ## Recommended Build Spec
 
+Prefer **`debian:bookworm-slim`** (stable, widely cached). Avoid
+`debian:trixie-slim` when Docker Hub metadata pulls time out.
+
 ```json
 {
-  "baseImage": "debian:trixie-slim",
+  "baseImage": "debian:bookworm-slim",
   "buildSteps": [
     "pnpm install",
     "pnpm run build"
@@ -29,17 +32,33 @@ still succeeds.
 
 ### Critical
 
-1. **`tsx` → `node`** in `cmdArguments` (stdio server is plain JS)
-2. **`pinnedCommit`: null** — never pin old commits (`b59bc2b` is pre-fix)
+1. **`tsx` → `node`** in `cmdArguments` (stdio server is plain JS; NDJSON framing)
+2. **`pinnedCommit`: null** — never pin old commits
 3. **`pnpm run build` is safe** — no-op script; pure JS, no dist/
-4. After save, **rebuild** so checkout is latest `master`
-5. **LICENSE** is MIT at repo root (fixes Glama “license — not found”)
+4. After save, **rebuild** so checkout is latest `master` (need `add5ee3+` for stdio)
+5. **LICENSE** is MIT at repo root
 
-## Minimal alternative (no build step)
+### If build fails on base image metadata
+
+Error looks like:
+
+```
+debian:trixie-slim: failed to resolve source metadata for docker.io/library/...
+context deadline exceeded
+```
+
+That is **Glama → Docker Hub**, not app code. Fix:
+
+1. **Retry** the build (transient session/timeout)
+2. Switch `baseImage` to **`debian:bookworm-slim`** (or omit and let Glama default)
+3. Keep `nodeVersion: "24"` so Node is installed on top of the base
+
+## Minimal alternative
 
 ```json
 {
-  "buildSteps": ["pnpm install"],
+  "baseImage": "debian:bookworm-slim",
+  "buildSteps": ["pnpm install", "pnpm run build"],
   "cmdArguments": ["mcp-proxy", "--", "node", "server.js"],
   "nodeVersion": "24",
   "pinnedCommit": null
@@ -48,19 +67,17 @@ still succeeds.
 
 ## Verify
 
-Docker log must show a commit **after** the license/build fix, e.g. HEAD
-message containing `build` + `LICENSE`, and:
+Docker log should:
 
-```
-HEAD is now at <sha> ...
-Done in ... using pnpm ...
-nf-mcp: pure JS, no compile step
-```
+1. Pull base image successfully (not deadline exceeded)
+2. Checkout a commit **after** `add5ee3` (stdio NDJSON fix)
+3. Show `nf-mcp: pure JS, no compile step`
+4. At runtime: `northern-forge-mcp stdio ready` then an initialize **response**, not a 60s timeout
 
-Must **not** fail with:
+Must **not**:
 
 ```
 ERR_PNPM_NO_SCRIPT  Missing script: build
+MCP error -32001: Request timed out
+failed to resolve source metadata ... context deadline exceeded
 ```
-
-Must **not** run `tsx server.js` (ENOENT on PATH without node_modules/.bin).
