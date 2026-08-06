@@ -86,3 +86,36 @@ That is **Glama’s builder ↔ Docker Hub**, not this repo. App code never runs
 3. Log: `nf-mcp: pure JS, no compile step`
 4. Runtime: `northern-forge-mcp stdio ready` then initialize **response**
    (not a 60s `-32001` timeout)
+
+## Connector (hosted remote)
+
+Submit at https://glama.ai/mcp/connectors → **Add MCP Server → Connector**.
+
+| Field | Value |
+|--------|--------|
+| Name | Northern Forge MCP |
+| Description | Free-core agent tools with typed schemas (diff, cron, units, JSON→TS, golden hour, pack weight, prompts). No account required. |
+| Server URL | `https://nf-mcp.vercel.app/mcp` |
+| Private Notes | (leave empty — free-core, no auth) |
+
+### Ownership claim
+
+Live at:
+
+```text
+GET https://nf-mcp.vercel.app/.well-known/glama.json
+```
+
+```json
+{
+  "$schema": "https://glama.ai/mcp/schemas/connector.json",
+  "maintainers": [{ "email": "justin@justindkamen.com" }]
+}
+```
+
+Email must match the Glama account. After claim, listing is editable.
+
+### Auth note
+
+`POST /api/mcp/connectors/submit` requires a Glama session (redirects to sign-up when unauthenticated). Complete submit while signed in as the maintainer.
+
