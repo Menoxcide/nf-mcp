@@ -1,18 +1,21 @@
 # Glama build settings (Admin → Build Spec)
 
-Glama may infer `mcp-proxy -- tsx server.js` and/or add `pnpm run build`.
-This repo is **plain Node JS** (no TypeScript compile). `server.js` is the
-stdio entry; `package.json` includes a no-op `build` so a forced build step
-still succeeds.
+## Important: `baseImage` is locked
 
-## Recommended Build Spec
+Glama’s builder **only allows** (or always generates):
 
-Prefer **`debian:bookworm-slim`** (stable, widely cached). Avoid
-`debian:trixie-slim` when Docker Hub metadata pulls time out.
+```text
+debian:trixie-slim
+```
+
+You **cannot** switch to `bookworm`, `node:*`, etc. in Admin — the UI/API
+rejects or rewrites it. Leave `baseImage` as Glama sets it.
+
+## Recommended Build Spec (editable fields only)
 
 ```json
 {
-  "baseImage": "debian:bookworm-slim",
+  "baseImage": "debian:trixie-slim",
   "buildSteps": [
     "pnpm install",
     "pnpm run build"
@@ -30,54 +33,56 @@ Prefer **`debian:bookworm-slim`** (stable, widely cached). Avoid
 }
 ```
 
-### Critical
+What you *can* change:
 
-1. **`tsx` → `node`** in `cmdArguments` (stdio server is plain JS; NDJSON framing)
-2. **`pinnedCommit`: null** — never pin old commits
-3. **`pnpm run build` is safe** — no-op script; pure JS, no dist/
-4. After save, **rebuild** so checkout is latest `master` (need `add5ee3+` for stdio)
-5. **LICENSE** is MIT at repo root
+| Field | Value |
+|--------|--------|
+| `buildSteps` | `pnpm install` + `pnpm run build` (build is a no-op) |
+| `cmdArguments` | `mcp-proxy -- node server.js` (**not** `tsx`) |
+| `nodeVersion` | `24` (or `20` / `22` if preferred) |
+| `pinnedCommit` | `null` |
 
-### If build fails on base image metadata
+What you *cannot* change:
 
-Error looks like:
+| Field | Why |
+|--------|-----|
+| `baseImage` | Glama-controlled → always `debian:trixie-slim` |
+
+## If build fails: Docker Hub timeout
 
 ```
 debian:trixie-slim: failed to resolve source metadata for docker.io/library/...
-context deadline exceeded
+no active session ... context deadline exceeded
 ```
 
-That is **Glama → Docker Hub**, not app code. Fix:
+That is **Glama’s builder ↔ Docker Hub**, not this repo. App code never runs.
 
-1. **Retry** the build (transient session/timeout)
-2. Switch `baseImage` to **`debian:bookworm-slim`** (or omit and let Glama default)
-3. Keep `nodeVersion: "24"` so Node is installed on top of the base
+**What to do:**
 
-## Minimal alternative
+1. **Retry Rebuild** in Glama (often succeeds on 2nd–3rd try).
+2. Wait a few minutes if Docker Hub is slow; try again.
+3. Do **not** try to change baseImage — the platform won’t allow it.
+4. Optional fallback while Docker is flaky: use the **hosted remote** already
+   registered for this server (no image build required):
 
-```json
-{
-  "baseImage": "debian:bookworm-slim",
-  "buildSteps": ["pnpm install", "pnpm run build"],
-  "cmdArguments": ["mcp-proxy", "--", "node", "server.js"],
-  "nodeVersion": "24",
-  "pinnedCommit": null
-}
-```
+   ```text
+   https://nf-mcp.vercel.app/mcp
+   ```
 
-## Verify
+   Glama lists the server as `hosting:remote-capable`. Point clients / Glama
+   remote URL there until the container build succeeds.
 
-Docker log should:
+## Code requirements (already on master)
 
-1. Pull base image successfully (not deadline exceeded)
-2. Checkout a commit **after** `add5ee3` (stdio NDJSON fix)
-3. Show `nf-mcp: pure JS, no compile step`
-4. At runtime: `northern-forge-mcp stdio ready` then an initialize **response**, not a 60s timeout
+- No-op `build` script (avoids `ERR_PNPM_NO_SCRIPT`)
+- MIT `LICENSE`
+- stdio **NDJSON** framing in `server.js` (commit `add5ee3+`)
+- `cmdArguments` must use **`node`**, not `tsx`
 
-Must **not**:
+## Verify after a good build
 
-```
-ERR_PNPM_NO_SCRIPT  Missing script: build
-MCP error -32001: Request timed out
-failed to resolve source metadata ... context deadline exceeded
-```
+1. Base image pull succeeds (no `context deadline exceeded`)
+2. Checkout is after `add5ee3`
+3. Log: `nf-mcp: pure JS, no compile step`
+4. Runtime: `northern-forge-mcp stdio ready` then initialize **response**
+   (not a 60s `-32001` timeout)
